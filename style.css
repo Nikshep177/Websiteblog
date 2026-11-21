@@ -1,0 +1,333 @@
+/* ==========================================================
+   Midnight notebook · observatory · journal
+   Shared theme — link this from both pages.
+   ========================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400&display=swap");
+
+:root {
+  /* ink & paper */
+  --bg:          #0c0e15;   /* charcoal-midnight, never pure black */
+  --bg-deep:     #08090e;
+  --graphite:    #141722;
+  --text:        #d9d6e0;   /* soft off-white, slight violet */
+  --text-dim:    #8d8a9c;
+  --text-faint:  #5a5869;
+  --accent:      #a99cc9;   /* muted violet */
+  --line:        rgba(169, 156, 201, 0.16);
+
+  /* type */
+  --serif: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --sans:  "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --copy-size: clamp(0.85rem, 0.35vw + 0.75rem, 1rem);
+
+  /* layout */
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+  --measure: 38rem;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { color-scheme: dark; -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  position: relative;
+  isolation: isolate;
+  color: var(--text);
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: var(--copy-size);
+  line-height: 1.7;
+  letter-spacing: 0.005em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  background-color: var(--bg);
+
+  /* the quiet sky: faint pools of indigo and violet, a soft vignette */
+  background-image:
+    radial-gradient(60rem 42rem at 82% -8%,  rgba(70, 76, 140, 0.20), transparent 70%),
+    radial-gradient(50rem 40rem at -10% 105%, rgba(92, 70, 128, 0.14), transparent 70%),
+    radial-gradient(90rem 60rem at 50% 50%,  rgba(20, 23, 34, 0.0), rgba(8, 9, 14, 0.55) 100%),
+    linear-gradient(180deg, #0d1019 0%, var(--bg) 45%, #0a0b11 100%);
+  background-attachment: fixed;
+}
+
+/* ---------- layer 1: distant stars + one faint orbital path ---------- */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+
+  background-image:
+    /* orbit: three nested, tilted ellipses, one tiny body on the outer path */
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 1200' fill='none'><g transform='rotate(-24 600 600)' stroke='%23a99cc9' stroke-width='1'><ellipse cx='600' cy='600' rx='560' ry='210' stroke-opacity='.10'/><ellipse cx='600' cy='600' rx='420' ry='157' stroke-opacity='.08' stroke-dasharray='2 9'/><ellipse cx='600' cy='600' rx='270' ry='101' stroke-opacity='.07'/><circle cx='1160' cy='600' r='2.6' fill='%23cfc6e6' fill-opacity='.55' stroke='none'/></g></svg>"),
+    /* stars: three sparse tiles at unrelated sizes so no pattern reads */
+    radial-gradient(1px 1px at 37px 61px,   rgba(220, 220, 240, 0.55), transparent 100%),
+    radial-gradient(1px 1px at 211px 143px, rgba(200, 205, 240, 0.40), transparent 100%),
+    radial-gradient(1.4px 1.4px at 97px 233px, rgba(230, 225, 245, 0.45), transparent 100%),
+    radial-gradient(1px 1px at 301px 17px,  rgba(190, 180, 225, 0.35), transparent 100%),
+    radial-gradient(1px 1px at 149px 391px, rgba(220, 220, 240, 0.30), transparent 100%);
+  background-repeat: no-repeat, repeat, repeat, repeat, repeat;
+  background-position: calc(100% + 18vmin) -14vmin, 0 0, 0 0, 0 0, 0 0;
+  background-size:
+    min(110vmin, 1100px) min(110vmin, 1100px),
+    263px 281px,
+    347px 311px,
+    419px 443px,
+    521px 487px;
+}
+
+/* ---------- layer 2: fine grain ---------- */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 220px 220px;
+}
+
+/* ---------- navigation ---------- */
+.site-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.5rem;
+  padding: clamp(1.25rem, 3vw, 2.25rem) var(--gutter);
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 0.74rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.site-nav ul {
+  display: flex;
+  gap: clamp(1.5rem, 4vw, 2.75rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-nav a {
+  position: relative;
+  padding: 0.4rem 0;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.4s ease;
+}
+
+.site-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.7;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s ease;
+}
+
+.site-nav a:hover,
+.site-nav a:focus-visible,
+.site-nav a[aria-current="page"] { color: var(--text); }
+
+.site-nav a:hover::after,
+.site-nav a:focus-visible::after,
+.site-nav a[aria-current="page"]::after { transform: scaleX(1); }
+
+.site-nav a:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 6px;
+}
+
+/* ---------- page body defaults ---------- */
+main {
+  width: min(100%, calc(var(--measure) + 2 * var(--gutter)));
+  margin-inline: auto;
+  padding: clamp(3rem, 10vh, 7rem) var(--gutter);
+}
+
+.blog-page {
+  width: min(100%, calc(52rem + 2 * var(--gutter)));
+  padding-block-start: clamp(0.5rem, 1.5vh, 1rem);
+}
+
+.blog-intro {
+  min-height: 25vh;
+  min-height: 25dvh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.blog-intro h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vh, 3rem);
+  text-align: center;
+}
+
+.blog-intro p {
+  margin: 0 0 clamp(2.5rem, 6vh, 3.5rem);
+  font-size: var(--copy-size);
+  line-height: 1.4;
+}
+
+.blog-intro hr {
+  margin: auto 0 0;
+}
+
+.pdf-list {
+  width: 100%;
+  list-style: none;
+  margin: clamp(1.5rem, 4vh, 2.5rem) 0 0;
+  padding: 0;
+}
+
+.pdf-entry {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  padding: clamp(0.5rem, 1vh, 0.75rem) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.pdf-number {
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  color: var(--text-faint);
+}
+
+.pdf-title {
+  color: var(--text);
+  font-size: var(--copy-size);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.25em;
+  transition: color 0.3s ease, text-decoration-color 0.3s ease;
+}
+
+.pdf-link {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.pdf-entry:hover .pdf-title {
+  color: #fff;
+  text-decoration-color: var(--line);
+}
+
+.pdf-entry:hover .pdf-link {
+  color: var(--accent);
+}
+
+.pdf-link[aria-disabled="true"] {
+  pointer-events: none;
+  color: var(--text-faint);
+}
+
+.pdf-entry:hover .pdf-link[aria-disabled="true"] {
+  color: var(--text-faint);
+}
+
+.pdf-link:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 6px;
+}
+
+.other-stuff {
+  margin-top: clamp(4.5rem, 12vh, 7rem);
+}
+
+.other-stuff h2 {
+  margin: 0 0 clamp(1rem, 3vh, 1.5rem);
+  font-size: clamp(1.35rem, 3vh, 1.8rem);
+}
+
+.other-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.other-list li {
+  display: grid;
+  grid-template-columns: 1.5rem minmax(0, 1fr);
+  gap: 0.75rem;
+  padding: clamp(0.7rem, 2vh, 1rem) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.other-number {
+  font-family: var(--sans);
+  font-size: var(--copy-size);
+  color: var(--text-faint);
+  line-height: 1.4;
+}
+
+.other-copy {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: var(--copy-size);
+  line-height: 1.5;
+}
+
+.other-title {
+  color: var(--text);
+  font-weight: 400;
+}
+
+h1, h2, h3 {
+  font-family: var(--serif);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  color: var(--text);
+}
+
+h1 { font-size: clamp(2.4rem, 6vw, 4rem); font-style: italic; margin: 0 0 1.25rem; }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+
+p { margin: 0 0 1.2em; color: var(--text); }
+
+a { color: var(--accent); text-underline-offset: 0.25em; text-decoration-thickness: 1px; text-decoration-color: var(--line); transition: text-decoration-color .3s; }
+a:hover { text-decoration-color: var(--accent); }
+
+hr { border: 0; height: 1px; background: var(--line); margin: 3rem 0; }
+
+::selection { background: rgba(169, 156, 201, 0.28); color: #fff; }
+
+/* ---------- small screens ---------- */
+@media (max-width: 520px) {
+  .site-nav { font-size: 0.68rem; letter-spacing: 0.22em; }
+  body::before { background-position: calc(100% + 30vmin) -8vmin, 0 0, 0 0, 0 0, 0 0; }
+  .pdf-list { width: 100%; }
+  .pdf-entry { grid-template-columns: 1.9rem minmax(0, 1fr) auto; gap: 0.6rem; }
+  .pdf-number { font-size: 0.58rem; letter-spacing: 0.12em; }
+  .pdf-link { font-size: 0.58rem; letter-spacing: 0.14em; }
+}
+
+/* ---------- a gentle fade-in, respecting preferences ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  main { animation: arrive 1.2s ease both; }
+  @keyframes arrive { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+}

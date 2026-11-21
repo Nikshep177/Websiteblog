@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "node -e \"require(process.env.INIT_CWD + '/server.js')\""
+  }
+}
