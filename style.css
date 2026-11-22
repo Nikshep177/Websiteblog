@@ -162,6 +162,44 @@ main {
   padding-block-start: clamp(0.5rem, 1.5vh, 1rem);
 }
 
+.profile-page {
+  width: min(100%, calc(52rem + 2 * var(--gutter)));
+  padding-block-start: clamp(1rem, 3vh, 2rem);
+}
+
+.profile {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(10rem, 22vw, 16rem);
+  align-items: start;
+  gap: clamp(1.5rem, 5vw, 4rem);
+}
+
+.profile-copy {
+  max-width: var(--measure);
+}
+
+.profile-copy h1 {
+  margin-bottom: 1rem;
+}
+
+.profile-photo {
+  width: 100%;
+  aspect-ratio: 1;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(169, 156, 201, 0.1), transparent 60%),
+    var(--graphite);
+}
+
+.profile-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
 .blog-intro {
   min-height: 25vh;
   min-height: 25dvh;
@@ -195,11 +233,20 @@ main {
 
 .pdf-entry {
   display: grid;
-  grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: baseline;
   gap: clamp(0.75rem, 2vw, 1.5rem);
   padding: clamp(0.5rem, 1vh, 0.75rem) 0;
   border-bottom: 1px solid var(--line);
+}
+
+.pdf-entry-link {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  color: inherit;
+  text-decoration: none;
 }
 
 .pdf-number {
@@ -236,17 +283,13 @@ main {
   text-decoration-color: var(--line);
 }
 
+.pdf-entry-link:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 6px;
+}
+
 .pdf-entry:hover .pdf-link {
   color: var(--accent);
-}
-
-.pdf-link[aria-disabled="true"] {
-  pointer-events: none;
-  color: var(--text-faint);
-}
-
-.pdf-entry:hover .pdf-link[aria-disabled="true"] {
-  color: var(--text-faint);
 }
 
 .pdf-link:focus-visible {
@@ -271,10 +314,25 @@ main {
 
 .other-list li {
   display: grid;
-  grid-template-columns: 1.5rem minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
   gap: 0.75rem;
   padding: clamp(0.7rem, 2vh, 1rem) 0;
   border-bottom: 1px solid var(--line);
+}
+
+.other-entry-link {
+  display: grid;
+  grid-template-columns: 1.5rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.75rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.other-entry-link:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 6px;
 }
 
 .other-number {
@@ -321,9 +379,14 @@ hr { border: 0; height: 1px; background: var(--line); margin: 3rem 0; }
   .site-nav { font-size: 0.68rem; letter-spacing: 0.22em; }
   body::before { background-position: calc(100% + 30vmin) -8vmin, 0 0, 0 0, 0 0, 0 0; }
   .pdf-list { width: 100%; }
-  .pdf-entry { grid-template-columns: 1.9rem minmax(0, 1fr) auto; gap: 0.6rem; }
+  .pdf-entry { gap: 0.6rem; }
+  .pdf-entry-link { grid-template-columns: 1.9rem minmax(0, 1fr); gap: 0.6rem; }
+  .other-list li { gap: 0.5rem; }
+  .other-entry-link { grid-template-columns: 1.2rem minmax(0, 1fr); gap: 0.5rem; }
   .pdf-number { font-size: 0.58rem; letter-spacing: 0.12em; }
   .pdf-link { font-size: 0.58rem; letter-spacing: 0.14em; }
+  .profile { grid-template-columns: 1fr; min-height: 0; }
+  .profile-photo { max-width: 14rem; }
 }
 
 /* ---------- a gentle fade-in, respecting preferences ---------- */
